@@ -5236,6 +5236,7 @@
       "Microsoft.EntityFrameworkCore >= 9.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.2",
       "Microsoft.EntityFrameworkCore.Sqlserver >= 9.0.2",
+      "Microsoft.Extensions.Logging >= 9.0.2",
       "Microsoft.OpenApi >= 1.6.23",
       "RabbitMQ.Client >= 7.1.0",
       "Swashbuckle.AspNetCore >= 7.2.0"
@@ -5247,11 +5248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/user/tuitionpaymentproces/XYZUniversityAPI/XYZUniversityAPI.csproj",
+      "projectUniqueName": "/home/user/tuitionpaymentprocess/XYZUniversityAPI/XYZUniversityAPI.csproj",
       "projectName": "XYZUniversityAPI",
-      "projectPath": "/home/user/tuitionpaymentproces/XYZUniversityAPI/XYZUniversityAPI.csproj",
+      "projectPath": "/home/user/tuitionpaymentprocess/XYZUniversityAPI/XYZUniversityAPI.csproj",
       "packagesPath": "/home/user/.nuget/packages/",
-      "outputPath": "/home/user/tuitionpaymentproces/XYZUniversityAPI/obj/",
+      "outputPath": "/home/user/tuitionpaymentprocess/XYZUniversityAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/user/.nuget/NuGet/NuGet.Config"
@@ -5298,6 +5299,10 @@
             "version": "[9.0.2, )"
           },
           "Microsoft.EntityFrameworkCore.Sqlserver": {
+            "target": "Package",
+            "version": "[9.0.2, )"
+          },
+          "Microsoft.Extensions.Logging": {
             "target": "Package",
             "version": "[9.0.2, )"
           },

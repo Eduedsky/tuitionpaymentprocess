@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/user/tuitionpaymentproces/myapp.csproj": {}
+    "/home/user/tuitionpaymentprocess/myapp.csproj": {}
   },
   "projects": {
-    "/home/user/tuitionpaymentproces/myapp.csproj": {
+    "/home/user/tuitionpaymentprocess/myapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/user/tuitionpaymentproces/myapp.csproj",
+        "projectUniqueName": "/home/user/tuitionpaymentprocess/myapp.csproj",
         "projectName": "myapp",
-        "projectPath": "/home/user/tuitionpaymentproces/myapp.csproj",
+        "projectPath": "/home/user/tuitionpaymentprocess/myapp.csproj",
         "packagesPath": "/home/user/.nuget/packages/",
-        "outputPath": "/home/user/tuitionpaymentproces/obj/",
+        "outputPath": "/home/user/tuitionpaymentprocess/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/user/.nuget/NuGet/NuGet.Config"

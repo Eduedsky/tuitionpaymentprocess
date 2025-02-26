@@ -15,7 +15,7 @@ namespace XYZUniversityAPI.Models
 
         [Required]
         [MaxLength(50)]
-        public string StudentId { get; set; } // Foreign key to Student.Id
+        public string StudentId { get; set; }  = string.Empty;  // Foreign key to Student.Id
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
@@ -26,7 +26,7 @@ namespace XYZUniversityAPI.Models
 
         [Required]
         [MaxLength(20)]
-        public string Status { get; set; } // e.g., "Completed", "Failed"
+        public string Status { get; set; } = string.Empty; // e.g., "Completed", "Failed"
 
         [Required]
         public DateTime CreatedAt { get; set; }

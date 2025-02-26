@@ -13,7 +13,7 @@ namespace XYZUniversityAPI.Models
 
         [Required]
         [MaxLength(100)]
-        public string Name { get; set; } = string.Empty;
+        public string StudentName { get; set; } = string.Empty;
 
         [Required]
         public bool IsEnrolled { get; set; }
