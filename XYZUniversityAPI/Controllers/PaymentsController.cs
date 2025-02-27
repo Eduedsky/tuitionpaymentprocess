@@ -32,7 +32,8 @@ namespace XYZUniversityAPI.Controllers
                 User = "MockBank",
                 Endpoint = "/api/payments/notification",
                 RequestPayload = JsonSerializer.Serialize(requests),
-                ResponseStatus = 200
+                ResponseStatus = 200,
+                ErrorMessage = null
             };
 
             try

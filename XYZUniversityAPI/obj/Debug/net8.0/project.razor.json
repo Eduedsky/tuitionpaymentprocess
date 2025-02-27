@@ -1,6 +1,6 @@
 {
-  "SerializedFilePath": "/home/user/tuitionpaymentprocess/obj/Debug/net8.0/project.razor.json",
-  "FilePath": "/home/user/tuitionpaymentprocess/myapp.csproj",
+  "SerializedFilePath": "/home/user/tuitionpaymentprocess/XYZUniversityAPI/obj/Debug/net8.0/project.razor.json",
+  "FilePath": "/home/user/tuitionpaymentprocess/XYZUniversityAPI/XYZUniversityAPI.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "8.0",
@@ -19326,7 +19326,7 @@
     ],
     "CSharpLanguageVersion": 1200
   },
-  "RootNamespace": "myapp",
+  "RootNamespace": "XYZUniversityAPI",
   "Documents": [],
   "SerializationFormat": "0.3"
 }

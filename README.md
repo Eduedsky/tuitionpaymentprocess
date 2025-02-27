@@ -1,10 +1,19 @@
-# .NET API Service Starter
+# Tuition Payment Processing Project
 
-This is a minimal .NET API service starter based on [Google Cloud Run Quickstart](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-dotnet-service).
+This repository contains components for a tuition payment processing system, integrating a university API with a mock bank service.
+
+## Project Structure
+- **`mockbank/`**: A mock bank component (e.g., client or API) for simulating payment notifications.
+- **`XYZUniversityAPI/`**: The main university API for student validation and payment processing.
+
+## Overview
+- **Purpose**: Facilitates tuition payment workflows between a university and a bank.
+- **Components**:
+  - **XYZ University API**: Handles student and payment data, deployed on Google Cloud. (details in its README)
+  - **Mock Bank**: Simulates bank interactions (details in its README).
 
 ## Getting Started
-
-Server should run automatically when starting a workspace. To run manually, run:
-```sh
-dotnet watch --urls=http://localhost:3000
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Eduedsky/tuitionpaymentprocess.git
+   cd tuitionpaymentprocess

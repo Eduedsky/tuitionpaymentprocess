@@ -6,6 +6,7 @@ namespace XYZUniversityAPI.Models
     public class AuditLog
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Ensures EF handles ID generation
         public int Id { get; set; } // Auto-generated primary key
 
         [Required]
