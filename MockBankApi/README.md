@@ -100,24 +100,42 @@ Apply Entity Framework Core migrations to set up the database schema:
 ```bash
 dotnet tool install --global dotnet-ef
 ```
+If the tool isn’t found after installation, refresh your session:
+```bash
+export PATH="$PATH:/home/karpedsbinary/.dotnet/tools"
+```
 
 - **Navigate to Project Directory**:
 ```bash
 cd ~/tuitionpaymentprocess/MockBankAPI
 ```
 
+- **Generate Initial Migration** (if not already done):
+```bash
+dotnet ef migrations add InitialCreate
+```
+This creates a migration file based on your `MockBankDbContext` and models (`UniversityConfigs`, `Payments`, `AuditLogs`).
+
 - **Run Migrations**:
 ```bash
 dotnet ef database update
 ```
-This command applies all pending migrations (e.g., creating `UniversityConfigs`, `Payments`, and `AuditLogs` tables) based on the EF Core model definitions in your project. It uses the connection string from `appsettings.json`.
+This command applies all pending migrations, creating the `UniversityConfigs`, `Payments`, and `AuditLogs` tables in `mockbank-db` using the connection string from `appsettings.json`.
 
-- **Verify Migration**:
-Check that the tables exist:
+- **Seed University Configuration**: Insert the XYZ University configuration into the `UniversityConfigs` table:
+```bash
+sqlcmd -S localhost -U SA -P 'K@k@2025!' -Q "USE [mockbank-db]; INSERT INTO UniversityConfigs (UniversityCode, BaseUrl, ApiKey) VALUES ('XYZ', 'http://34.31.232.140:5251', 'afjrbgt44rw08afsrfb4brj24OBOI89FN4GKDF4BmE');"
+```
+This adds the necessary configuration for `MockBankAPI` to communicate with `XYZUniversityAPI`.
+
+- **Verify Migration and Data**: Check that the tables and data exist:
 ```bash
 sqlcmd -S localhost -U SA -P 'K@k@2025!' -Q "USE [mockbank-db]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;"
 ```
-You should see `UniversityConfigs`, `Payments`, and `AuditLogs` in the output.
+You should see `UniversityConfigs`, `Payments`, and `AuditLogs`. To confirm the XYZ University config:
+```bash
+sqlcmd -S localhost -U SA -P 'K@k@2025!' -Q "USE [mockbank-db]; SELECT * FROM UniversityConfigs;"
+```
 
 ### 6. Build and Run the API
 Compile and start the API:
@@ -223,6 +241,5 @@ curl -X POST -d '{"StudentId": "2020-TWC-1223"}' http://34.134.214.146:5000/api/
 
 ## License
 MIT License.
-```
 
 ---
