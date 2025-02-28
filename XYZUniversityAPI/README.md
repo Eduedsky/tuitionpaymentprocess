@@ -45,8 +45,8 @@ sudo apt-get install -y mssql-server
 sudo /opt/mssql/bin/mssql-conf setup
 ```
 During setup, select the "Express" edition and set the SA password (e.g., Em1!1111).
-Enable Remote Access: Edit the SQL Server configuration file:
 
+Enable Remote Access: Edit the SQL Server configuration file:
 ```bash
 sudo nano /etc/mssql/mssql.conf
 ```
@@ -55,14 +55,14 @@ Restart SQL Server:
 ```bash
 sudo systemctl restart mssql-server
 ```
+
 Create the Database: Create the `xyzuniversity-db` database:
 ```bash
 sqlcmd -S localhost -U SA -P 'Em1!1111' -Q "CREATE DATABASE [xyzuniversity-db]"
 ```
 
 ### 3. Configure appsettings.json
-Update the appsettings.json file in the project root with the following:
-
+Update the `appsettings.json` file in the project root with the following:
 ```json
 {
   "ConnectionStrings": {
@@ -74,7 +74,7 @@ Update the appsettings.json file in the project root with the following:
   "ServerUrl": "http://0.0.0.0:5251"
 }
 ```
-Ensure the DefaultConnection matches your SQL Server setup.
+Ensure the `DefaultConnection` matches your SQL Server setup.
 
 ### 4. Set Up SQL Server Login
 Create a SQL Server login for the API:
@@ -85,23 +85,37 @@ sqlcmd -S localhost -U SA -P 'Em1!1111' -Q "CREATE LOGIN sqlserver WITH PASSWORD
 ```
 
 ### 5. Run Database Migrations
-Apply the Entity Framework migrations to set up the database schema:
+Apply the Entity Framework Core migrations to set up the database schema:
 
+- **Install EF Core Tools** (if not already installed globally):
 ```bash
 dotnet tool install --global dotnet-ef
-dotnet ef database update
 ```
 
-Run these commands from the `XYZUniversityAPI` directory.
+- **Navigate to Project Directory**:
+```bash
+cd ~/tuitionpaymentprocess/XYZUniversityAPI
+```
+
+- **Run Migrations**:
+```bash
+dotnet ef database update
+```
+This command applies all pending migrations (e.g., creating `Students`, `Payments`, and `AuditLogs` tables) based on the EF Core model definitions in your project. It uses the connection string from `appsettings.json`.
+
+- **Verify Migration**:
+Check that the tables exist:
+```bash
+sqlcmd -S localhost -U SA -P 'Em1!1111' -Q "USE [xyzuniversity-db]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES;"
+```
+You should see `Students`, `Payments`, and `AuditLogs` in the output.
 
 ### 6. Build and Run the API
 Compile and start the API:
-
 ```bash
 dotnet build
 dotnet run
 ```
-
 The API will listen on `http://0.0.0.0:5251` and be accessible externally at `http://34.31.232.140:5251`.
 
 ### 7. Configure Firewall Rules
@@ -123,11 +137,12 @@ gcloud compute firewall-rules create allow-api-5251 \
   --rules tcp:5251
 gcloud compute instances add-tags xyz-university-api-server --tags xyz-university-api-server --zone YOUR_ZONE
 ```
-
 Replace `YOUR_ZONE` with your VM’s zone (e.g., `us-central1-a`).
+
 ## Usage
+
 ### Endpoints
-- Validate Student:
+- **Validate Student**:
 ```text
 POST /api/students/validate
 Headers:
@@ -135,9 +150,9 @@ Headers:
   Content-Type: application/json
 Body:
   {"StudentId": "2020-TWC-1223"}
-  ```
+```
 
-- Process Payment Notification:
+- **Process Payment Notification**:
 ```text
 POST /api/payments/notification
 Headers:
@@ -148,45 +163,35 @@ Body:
 ```
 
 ### Testing
-- Local Test:
-``` bash
+- **Local Test**:
+```bash
 curl -H "X-API-Key: afjrbgt44rw08afsrfb4brj24OBOI89FN4GKDF4BmE" -X POST -d '{"StudentId": "2020-TWC-1223"}' http://localhost:5251/api/students/validate -H "Content-Type: application/json"
 ```
 
-- External Test:
-``` bash
-curl -H "X-API-Key: afjrbgt44rw08afsrfb4brj24OBOI89FN4GKDF4BmE" -X POST -d '{"StudentId": "2020-TWC-1223"}' http://YOUR-PUBLIC-IP:5251/api/students/validate -H "Content-Type: application/json"
-``` 
+- **External Test**:
+```bash
+curl -H "X-API-Key: afjrbgt44rw08afsrfb4brj24OBOI89FN4GKDF4BmE" -X POST -d '{"StudentId": "2020-TWC-1223"}' http://34.31.232.140:5251/api/students/validate -H "Content-Type: application/json"
+```
 
 ### Troubleshooting
-- Connection Refused:
- - Verify the API is bound to `0.0.0.0:5251`:
-``` bash
-sudo netstat -tuln | grep 5251
-```
+- **Connection Refused**:
+  - Verify the API is bound to `0.0.0.0:5251`:
+    ```bash
+    sudo netstat -tuln | grep 5251
+    ```
+  - Check firewall status:
+    ```bash
+    sudo ufw status
+    gcloud compute firewall-rules list
+    ```
 
- - Check firewall status:
-``` bash
-sudo ufw status
-gcloud compute firewall-rules list
-```
+- **Database Connection Errors**:
+  - Ensure `appsettings.json` credentials match the SQL Server login and that SQL Server is running:
+    ```bash
+    sudo systemctl status mssql-server
+    ```
 
-- Database Connection Errors:
- - Ensure `appsettings.json` credentials match the SQL Server login and that SQL Server is running:
-```bash
-sudo systemctl status mssql-server
-```
-
-# License
+## License
 MIT License.
 
 ---
-
-### Explanation of the `README.md`
-This `README.md` includes everything needed to replicate your setup:
-- **SQL Server Setup**: Step-by-step instructions for installing SQL Server, enabling remote access, and creating the database and login.
-- **Server Configuration**: Covers cloning the repo, configuring `appsettings.json`, applying migrations, and setting up firewall rules.
-- **Practical Usage**: Provides example API calls and testing commands.
-- **Troubleshooting**: Addresses common issues like connection problems or database errors.
-
-It’s designed to be a standalone guide for anyone setting up the `XYZUniversityAPI`.

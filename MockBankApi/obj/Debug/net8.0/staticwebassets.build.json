@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "09JAYFOkNDKxOGt36wcI0J7i71Usx770+6d1JfXrFeU=",
+  "Source": "MockBankApi",
+  "BasePath": "_content/MockBankApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

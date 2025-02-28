@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/user/tuitionpaymentproces/MockBankApi/MockBankApi.csproj": {}
+    "/home/user/tuitionpaymentprocess/MockBankApi/MockBankApi.csproj": {}
   },
   "projects": {
-    "/home/user/tuitionpaymentproces/MockBankApi/MockBankApi.csproj": {
+    "/home/user/tuitionpaymentprocess/MockBankApi/MockBankApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/user/tuitionpaymentproces/MockBankApi/MockBankApi.csproj",
+        "projectUniqueName": "/home/user/tuitionpaymentprocess/MockBankApi/MockBankApi.csproj",
         "projectName": "MockBankApi",
-        "projectPath": "/home/user/tuitionpaymentproces/MockBankApi/MockBankApi.csproj",
+        "projectPath": "/home/user/tuitionpaymentprocess/MockBankApi/MockBankApi.csproj",
         "packagesPath": "/home/user/.nuget/packages/",
-        "outputPath": "/home/user/tuitionpaymentproces/MockBankApi/obj/",
+        "outputPath": "/home/user/tuitionpaymentprocess/MockBankApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/user/.nuget/NuGet/NuGet.Config"
@@ -52,16 +52,30 @@
               "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.2, )"
             },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
+            "Microsoft.EntityFrameworkCore.Sqlserver": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[1.6.23, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[7.1.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[7.2.0, )"
             }
           },
           "imports": [

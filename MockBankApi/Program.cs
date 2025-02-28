@@ -1,44 +1,71 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using MockBankAPI.Models;
+using MockBankAPI.Controllers;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// ======== Database Configuration ========
+builder.Services.AddDbContext<MockBankDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("MockBankDB");
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        throw new ArgumentNullException("MockBankDB", "Database connection string is required in configuration.");
+    }
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    });
+});
+
+// ======== Add Logging ========
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+    logging.SetMinimumLevel(LogLevel.Information);
+});
+
+// ======== Add Services ========
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mock Bank API", Version = "v1" });
+});
+
+// ========Add HTTP Client (no static config; dynamic in controller) ========
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ======== Log Startup ========
+app.Logger.LogInformation("Starting Mock Bank API...");
+
+// ======== Configure Middleware Pipeline ========
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+// ======== Read ServerUrl from configuration ========
+var serverUrl = app.Configuration["ServerUrl"];
+if (string.IsNullOrEmpty(serverUrl))
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    app.Logger.LogWarning("ServerUrl missing from configuration. Defaulting to http://0.0.0.0:5000.");
+    serverUrl = "http://0.0.0.0:5000";
+}
+app.Urls.Add(serverUrl);
+app.Logger.LogInformation("API configured to listen on {ServerUrl}", serverUrl);
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -19,6 +19,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5251", 
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
